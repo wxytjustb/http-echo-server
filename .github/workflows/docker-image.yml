@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: |
+        docker login -u ${{ secrets.HUB_NAME }} -p ${{ secrets.HUB_PASSWORD }} ${{ secrets.HUB_SERVER }}
+        docker build . --file Dockerfile --tag ${{ secrets.HUB_SERVER }}/library/http-echo-server:latest
+        docker push ${{ secrets.HUB_SERVER }}/library/http-echo-server:latest
+        
