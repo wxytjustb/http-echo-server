@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"net/url"
 )
 
 func main() {
@@ -18,7 +19,7 @@ func main() {
 
 		data := gin.H{
 			"method":    c.Request.Method,
-			"uri":       c.Request.RequestURI,
+			"uri":       url.QueryUnescape(c.Request.RequestURI),
 			"body":      c.Request.Body,
 			"headers":   headers,
 			"ip":        c.ClientIP(),
