@@ -17,9 +17,10 @@ func main() {
 			headers[k] = v[0]
 		}
 
+		uri, _ := url.QueryUnescape(c.Request.RequestURI)
 		data := gin.H{
 			"method":    c.Request.Method,
-			"uri":       url.QueryUnescape(c.Request.RequestURI),
+			"uri":       uri,
 			"body":      c.Request.Body,
 			"headers":   headers,
 			"ip":        c.ClientIP(),
